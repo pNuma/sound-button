@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sounds = [
-        '440_sweep.wav',
-        '440to880_sweep.wav',
-        '440to1760_sweep.wav',
-        '880to440_sweep.wav',
-        '1760to440_sweep.wav',
+        'decay_level1_d50.wav',
+        'decay_level2_d150.wav',
+        'decay_level3_d300.wav',
+        'decay_level4_d600.wav',
+        'sweep_440.wav',
+        'sweep_440to880.wav',
+        'sweep_440to1760.wav',
+        'sweep_880to440.wav',
+        'sweep_1760to440.wav',
         'composite_chord.wav',
         'sequential_double_click.wav'
     ];

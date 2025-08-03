@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sounds = [
-        '440.wav',
-        '440to880.wav',
-        '440to1760.wav',
-        '880to440.wav',
-        '1760to440.wav'
+        '440_sweep.wav',
+        '440to880_sweep.wav',
+        '440to1760_sweep.wav',
+        '880to440_sweep.wav',
+        '1760to440_sweep.wav',
+        'composite_chord.wav',
+        'sequential_double_click.wav'
     ];
     const audioFolder = './sample/'; 
 

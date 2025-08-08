@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'decay_level2_d150.wav',
         'decay_level3_d300.wav',
         'decay_level4_d600.wav',
-        'sweep_440.wav',
+        '440.wav',
         'sweep_440to880.wav',
         'sweep_440to1760.wav',
         'sweep_880to440.wav',
@@ -24,6 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let clickCount = 0;
 
 
+// キャッシュ
+const audioCache = {};
+
+const preloadSounds = () => {
+    sounds.forEach(soundFile => {
+        const audio = new Audio(audioFolder + soundFile);
+        audio.load(); // 
+        audioCache[soundFile] = audio; // 読み込んだオーディオをキャッシュに保存
+    });
+};
+
+
+const playSound = (soundFile) => {
+    const audio = audioCache[soundFile];
+    audio.currentTime = 0; // 連続で押された場合、再生位置を最初に戻す
+    audio.play();
+};
+
     // セレクター
     const setupSoundSelector = () => {
         sounds.forEach((soundFile, index) => {
@@ -34,11 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const playSound = (soundFile) => {
-        if (!soundFile) return; 
-        const audio = new Audio(audioFolder + soundFile);
-        audio.play().catch(error => console.error("音声の再生に失敗しました:", error));
-    };
 
     // モード選択ボタン
     modeButtons.forEach(button => {
@@ -51,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 再生ボタン
-    mainButton.addEventListener('click', () => {
+    mainButton.addEventListener('mousedown', () => {
         let soundToPlay;
 
         switch (currentMode) {
@@ -83,4 +96,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初期化
     setupSoundSelector();
+    preloadSounds();
 });

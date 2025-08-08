@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sounds = [
+        'silence',
         'decay_level1_d50.wav',
         'decay_level2_d150.wav',
         'decay_level3_d300.wav',
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'composite_chord.wav',
         'sequential_double_click.wav'
     ];
-    const audioFolder = './sample/'; 
+    const audioFolder = './sample/';
 
     // 要素の取得
     const mainButton = document.getElementById('main-button');
@@ -24,30 +25,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let clickCount = 0;
 
 
-// キャッシュ
-const audioCache = {};
+    // キャッシュ
+    const audioCache = {};
 
-const preloadSounds = () => {
-    sounds.forEach(soundFile => {
-        const audio = new Audio(audioFolder + soundFile);
-        audio.load(); // 
-        audioCache[soundFile] = audio; // 読み込んだオーディオをキャッシュに保存
-    });
-};
+    const preloadSounds = () => {
+        sounds.forEach(soundFile => {
+            if (soundFile === 'silence') return;
+            const audio = new Audio(audioFolder + soundFile);
+            audio.load(); // 
+            audioCache[soundFile] = audio; // 読み込んだオーディオをキャッシュに保存
+        });
+    };
 
 
-const playSound = (soundFile) => {
-    const audio = audioCache[soundFile];
-    audio.currentTime = 0; // 連続で押された場合、再生位置を最初に戻す
-    audio.play();
-};
+    const playSound = (soundFile) => {
+        if (soundFile === 'silence') return;
+        const audio = audioCache[soundFile];
+        audio.currentTime = 0; // 連続で押された場合、再生位置を最初に戻す
+        audio.play();
+    };
 
     // セレクター
     const setupSoundSelector = () => {
         sounds.forEach((soundFile, index) => {
             const option = document.createElement('option');
             option.value = soundFile;
-            option.textContent = `Sound ${index + 1}: ${soundFile.split('.')[0]}`;
+            if (soundFile === 'silence') {
+                option.textContent = 'Silence';
+            } else {
+                option.textContent = `Sound ${index}: ${soundFile.split('.')[0]}`;
+            }
+
             soundSelector.appendChild(option);
         });
     };

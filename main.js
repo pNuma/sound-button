@@ -19,10 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainButton = document.getElementById('main-button');
     const soundSelector = document.getElementById('sound-selector');
     const modeButtons = document.querySelectorAll('.mode-btn');
+    const volumeSlider = document.getElementById('volume-slider');
 
     // 状態管理
     let currentMode = 'fixed'; // 初期モード
     let clickCount = 0;
+    let currentVolume = 0.5;
 
 
     // キャッシュ
@@ -41,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const playSound = (soundFile) => {
         if (soundFile === 'silence') return;
         const audio = audioCache[soundFile];
+
+        audio.volume = currentVolume
         audio.currentTime = 0; // 連続で押された場合、再生位置を最初に戻す
         audio.play();
     };
@@ -100,6 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         playSound(soundToPlay);
+    });
+
+    volumeSlider.addEventListener('input', () => {
+        currentVolume = volumeSlider.value;
     });
 
     // 初期化
